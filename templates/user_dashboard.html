@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User HomePage</title>
+    <link rel="stylesheet" href="{% static 'navigation.css' %}">
+    <style>
+        .contents{
+            background-color:rgba(184, 212, 227, 0.604);
+            margin-left: 9.4vw;
+            margin-top: -1vw;
+            height: 100%;
+            width: 90%;
+            position: absolute;
+        }
+        
+        .details{
+            margin-top: 5vw;
+            margin-left: 10vw;
+        }
+        table {
+            width: 80%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 3vw;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background: linear-gradient(to bottom, #94ddf6, #5bb7e9);
+            color:black;
+            font-size: 1.2em;
+            font-weight: bold;
+            position: relative;
+            z-index: 1; 
+        }
+        
+        td {
+            background-color: #f9f9f9;
+        }
+        
+        tr:nth-child(even) td {
+            background-color: #f2f2f2;
+        }
+        
+        a {
+            color: blue;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        
+
+        
+        
+    </style>
+</head>
+<body>
+    <div class="navigation-bar">
+        <img src="{% static 'nav-bar image.png' %}">
+        <div class="navigation-buttons">
+            <button><a href="{% url 'user_dashboard' %}">Dashboard</a></button>
+            <button><a href="{% url 'user_events' %}">Events</a></button>
+        </div>
+    </div>
+
+    <div class="contents">      
+    <div class="details">
+        <h1>Welcome! Vivitha M</h1>
+        <table>
+            <tr>
+                <th>Event name</th>
+                <th>Attended date</th>
+                <th>Total marks</th>
+                <th>Remarks</th>
+            </tr>
+            {% for evaluation in evaluations %}
+            <tr>
+                <td>{{ evaluation.event_name }}</td>
+                <td>{{ evaluation.attended_date }}</td>
+                <td>{{ evaluation.overall_marks }}</td>
+                <td>{{ evaluation.remarks }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

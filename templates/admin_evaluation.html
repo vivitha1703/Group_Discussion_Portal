@@ -1,0 +1,256 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation</title>
+    <link rel="stylesheet" href="{% static 'navigation.css' %}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .contents {
+            margin-left: 190px;
+            width: 90%;
+            max-width: 1000px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5vw;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 2vw;
+        }
+        .details, .evaluate, .avg {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            padding: 2vw;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .details input, .evaluate input, .avg input {
+            width: 20%;
+            max-width: 400px;
+            height: 2.5vw;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1.0vw;
+            padding: 0.5vw;
+            box-sizing: border-box;
+            margin-top: 0.5vw;
+        }
+        .details p, .evaluate p {
+            margin-bottom: 0.5vw;
+            font-size: 1.2vw;
+            color: #555;
+            font-weight: bold;  /* Added bold style */
+        }
+        .evaluate input {
+            margin-left: 1vw;  /* Added margin-left */
+            margin-top: 0.5vw;
+        }
+        .avg{
+            background-color:rgb(241, 239, 239);
+        }
+        .avg h6 {
+            font-style: italic;
+            color: #777;
+            margin-bottom: 1vw;
+        }
+        .avg p {
+            font-size: 1.3vw;
+            margin-bottom: 0.5vw;
+        }
+        .avg input {
+            width: calc(100% - 2vw);
+        }
+        .submit {
+            background-color: #007bff;  /* Changed background to blue */
+            color: white;
+            font-size: 1.5vw;
+            padding: 0.8vw 2vw;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            margin: 1vw auto;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+        .submit:hover {
+            background-color: #0056b3;  /* Darker blue on hover */
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 0 auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;  /* Optional: Set max width for better control */
+        }
+        
+        .modal-footer {
+            text-align: center;  /* Center the button */
+            margin-top: -50px;    /* Add margin on top of the footer for spacing */
+        }
+        
+        .btn {
+            background-color: #492fdb;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;  /* Add margin on top for spacing */
+        }
+        
+        .btn:hover {
+            background-color: #0b3bd9;
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation-bar">
+        <img src="{% static 'nav-bar image.png' %}">
+        <div class="navigation-buttons">
+            <button><a href="{% url 'admin_dashboard' %}">Dashboard</a></button>
+            <button><a href="{% url 'admin_events' %}">Events</a></button>
+            <button><a href="{% url 'admin_evaluation' %}">Evaluation</a></button>
+        </div>
+    </div>
+    <div class="contents">
+        <h1>Evaluation Page</h1>
+        <form method="post" id="evaluationForm">
+            {% csrf_token %}
+            <div class="details">
+                <p>Event Name</p>
+                <input type="text" id="event_name" name="event_name" value="{{ form.event_name.value|default_if_none:'' }}" required>
+            
+                <p>Student Name</p>
+                <input type="text" id="student_name" name="student_name" value="{{ form.student_name.value|default_if_none:'' }}" required>
+            
+                <p>Email ID</p>
+                <input type="email" id="emailid" name="email_id" value="{{ form.email_id.value|default_if_none:'' }}" required>
+            
+                <p>Attended Date</p>
+                <input type="date" id="date" name="attended_date" value="{{ form.attended_date.value|default_if_none:'' }}" required>
+            </div>
+            <div class="evaluate">
+                <p>1.How well did the student introduce themselves, including relevant personal and professional details?</p>
+                <input type="number" min="1" max="5" required>
+                <p>2.How effectively did the student articulate their thoughts and ideas?</p>
+                <input type="number" min="1" max="5" required>
+                <p>3.Did the student demonstrate confidence in expressing their opinions and viewpoints?</p>
+                <input type="number" min="1" max="5" required>
+                <p>4.How effectively did the student communicate non-verbally (e.g., body language, eye contact)?</p>
+                <input type="number" min="1" max="5" required>
+                <p>5.Did the student demonstrate adaptability and flexibility in responding to different situations or viewpoints?</p>
+                <input type="number" min="1" max="5" required>
+                <p>6.How clear and concise was the student's communication?</p>
+                <input type="number" min="1" max="5" required>
+                <p>7.How well did the student manage time and contribute to the overall flow of the interaction?</p>
+                <input type="number" min="1" max="5" required>
+                <p>8.How effectively did the student conclude their interaction, leaving a lasting impression?</p>
+                <input type="number" min="1" max="5" required>
+                <p>9.Did the student display empathy and respect towards others' perspectives?</p>
+                <input type="number" min="1" max="5" required>
+                <p>10.Did the student showcase creativity or critical thinking skills?</p>
+                <input type="number" min="1" max="5" required>
+             <h3>Resume</h3>
+                <p>1.How clear and organized is the resume's layout and structure?</p>
+                <input type="number" min="1" max="5" >
+                <p>2.How well does the resume highlight the candidate's key skills and abilities?</p>
+                <input type="number" min="1" max="5" >
+                <p>3.Does the resume clearly list the candidate's educational background?</p>
+                <input type="number" min="1" max="5" >
+                <p>4.Does the resume showcase relevant work experience (internships, part-time jobs, volunteer work)?</p>
+                <input type="number" min="1" max="5" >
+                <p>5.Does the resume present a clear and positive first impression of the applicant?</p>
+                <input type="number" min="1" max="5" >
+            </div>
+            <div class="avg">
+                <h6>*This part will be displayed at the student's individual dashboard</h6>
+            
+                <p>Overall Marks (1-10)</p>
+                <input type="number" name="overall_marks" min="1" max="10" value="{{ form.overall_marks.value|default_if_none:'' }}" required>
+            
+                <p>Remarks</p>
+                <textarea name="remarks" placeholder="Give your remarks" required rows="5" 
+                    style="width: 100%; max-width: 400px; font-size: 1.2vw; padding: 0.5vw; border: 1px solid #ccc; border-radius: 10px;">
+                    {{ form.remarks.value|default_if_none:'' }}
+                </textarea>
+            </div>
+            <input type="submit" class="submit" value="Submit">
+        </form>
+    </div>
+    <div id="successModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h4>Evaluation Added Successfully</h4>
+            <p>Your evaluation has been submitted successfully.</p>
+        </div>
+        <div class="modal-footer">
+            <button id="closeModal" class="btn">Close</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById('evaluationForm').addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevent default form submission
+                
+                // Get form data
+                let formData = new FormData(this);
+        
+                // Submit form data using fetch API (AJAX)
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json()) // Expecting JSON response
+                .then(data => {
+                    if (data.success) {  
+                        // Show the success popup modal
+                        document.getElementById('successModal').style.display = 'block';
+                        
+                        // Reset the form fields
+                        document.getElementById('evaluationForm').reset();
+                    } else {
+                        alert("Error submitting the form. Please check the fields.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Something went wrong. Try again.");
+                });
+            });
+        
+            // Close modal when 'Close' button is clicked
+            document.getElementById('closeModal').addEventListener('click', function () {
+                document.getElementById('successModal').style.display = 'none';
+            });
+        });
+    </script>
+    
+</body>
+</html>

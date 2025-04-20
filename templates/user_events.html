@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <link rel="stylesheet" href="{% static 'navigation.css' %}">
+    <style>
+        .events{
+            position:fixed;
+            margin-left: 9.4vw;
+            margin-top: -1vw;
+            height: 100%;
+            width: 100%;
+            background-image: url('https://t4.ftcdn.net/jpg/05/42/73/17/360_F_542731787_npIDENXs9NMkl1mtyHKj8De2WBL2vnFW.jpg');
+            background-size: cover;
+        }
+        .events img{
+            height:70%;
+            width: 70%;
+        }
+        .events h3{
+            margin-left: 1vw;
+            font-size: 2vw;
+            font-weight: bold;
+        }
+        .events button{
+            width: 20%;
+            height: 40%;
+            margin:10px;
+            padding: 0px;
+            border: 2px solid dodgerblue;
+            border-radius: 10px;
+            background-color: white;
+            color:black;
+            font-size: 16px;
+            cursor: pointer;
+            transition:background-color 0.5s,color 0.1s,box-shadow 0.5s;
+        }
+        .events button:hover {
+            background-color:rgb(102, 193, 249);
+            color:black;
+            box-shadow: 2px 2px 2px black;
+
+        }
+        .events button a{
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation-bar">
+        <img src="{% static 'nav-bar image.png' %}">
+        <div class="navigation-buttons">
+            <button><a href="{% url 'user_dashboard' %}">Dashboard</a></button>
+            <button><a href="{% url 'user_events' %}">Events</a></button>
+        </div>
+    </div>
+    <div class="events">
+        <h3>Ongoing event</h3>
+    <button>
+        <a href="{% url 'user_booking' %}">
+        <img src="{% static 'self-introduction.png' %}" alt="image">
+        <h3>Self-Introduction</h3>
+        </a>
+    </button> 
+    </div>  
+</body>
+</html>

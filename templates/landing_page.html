@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GD Portal</title>
+    <style>
+        .left {
+            position: fixed;
+            top: 0;  
+            left: 0; 
+            bottom: 0; 
+            background: linear-gradient(to left, white,dodgerblue,dodgerblue);
+            width: 70%;
+            padding: 200px 0; 
+            text-align: center;
+        }   
+
+        .left h1{
+            margin-top: -100px;
+            font-size: 40px;
+        }
+        .left p{
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            font-size: 25px;
+            padding: 10px;
+        }
+        .left img{
+            height: auto;
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+        .right{
+            position: fixed;
+            width: 30%;
+            height:100%;
+            margin-left: 60%;
+            padding-top: 100px;
+            padding-bottom: 250px;
+            text-align: center;
+        }
+        .right button{
+            margin:10px;
+            font-size: 30px;
+            font-weight: 20px;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            padding: 8px;
+            border-radius: 10px;
+            border: 2px solid coral;
+            background-color: navy;
+            color: white;
+            cursor: pointer;
+        }
+        .right button:hover{
+            background-color:dodgerblue;
+        }
+        .right img{
+            max-width: 100%;
+            height: 30%;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="left">
+        <h1>Welcome to GD Portal</h1>
+        <p>Secure Your Seat<br>
+                Start The Discussion!</p>
+        <img src="{% static 'gd_background.png' %}" alt="gd">
+    </div>
+    <div class="right">
+        <img src="{% static 'Bannari_Amman_Institute_of_Technology_logo.png' %}" alt="logo"><br>
+        <h3>Login as</h3>
+        <button onclick="location.href='{% url 'login' %}?role=faculty'">Faculty</button>
+        <button onclick="location.href='{% url 'login' %}?role=student'">Student</button>
+        
+    </div>
+</body>
+</html>

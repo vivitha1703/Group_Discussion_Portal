@@ -1,0 +1,237 @@
+{% load static %}  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="{% static 'navigation.css' %}">
+    <style>
+        
+        h1{
+            margin-top: 3vw;
+            margin-left: 15vw;
+        }
+        .contents{
+            margin: 0;
+            margin-left: 10vw;
+            padding: 0;
+            max-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slider{
+            margin-top: 2vw;
+            width: 60vw;
+            height: 30vw;
+            border-radius: 2vw;
+            overflow: hidden;
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+        }
+        .slides{
+            width: 500%;
+            height: 100px;
+            display: flex;
+        }
+        .slides input{
+            display: none;
+        }
+        .slide{
+            justify-content: center;
+            align-items: center;
+            height: 30vw;
+            width: 20%;
+            transition: 3s;
+            background:linear-gradient(to left,#C9F6FF,#65DDEF) ;
+            border-radius: 2vw;
+            display: flex;  
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+          
+        }
+        .batch{
+            display: flex;
+            font-size: 2vw;
+            text-align: center;
+            margin: 1vw;
+            padding: 1vw;
+            width: 15vw;
+            height: 15vw;
+            background: radial-gradient(circle at center, white, red);
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center; 
+            transition: right 0.5s ease;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .details{
+            margin-top: 0vw;
+            margin-left:5vw;
+            font-size: 2vw;
+            font-weight: bold;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            transition: right 1.5s ease; 
+        }
+        .navigation-manual{
+            position: absolute;
+            width: 80vw;
+            margin-top: 25vw;
+            display: flex;
+            justify-content: center;
+        }  
+        .manual-btn{
+            border:2px solid black;
+            padding: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 1s;
+        }
+        .manual-btn:not(:last-child){
+            margin-right: 40px;
+        }
+        .manual-btn:hover{
+            background: black;
+        }
+        #radio1:checked ~ .first{
+            margin-left: 0%;
+        }
+        #radio2:checked ~ .first{
+            margin-left: -20%;
+        }
+        #radio3:checked ~ .first{
+            margin-left: -40%;
+        }
+        #radio4:checked ~ .first{
+            margin-left: -60%;
+        }
+
+        .navigation-auto{
+            position: absolute;
+            width: 80vw;
+            margin-top: 25vw;
+            display: flex;
+            justify-content: center;
+        }
+        .navigation-auto div{
+            border:2px solid black;
+            padding: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 1s;
+        }
+        .navigation-auto div:not(:last-child){
+            margin-right: 40px;
+        }
+        #radio1:checked ~ .navigation-auto .auto-btn1{
+            background: black;
+        }
+        #radio2:checked ~ .navigation-auto .auto-btn2{
+            background: black;
+        }
+        #radio3:checked ~ .navigation-auto .auto-btn3{
+            background: black;
+        }
+        #radio4:checked ~ .navigation-auto .auto-btn4{
+            background: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation-bar">
+        <img src="{% static 'nav-bar image.png' %}">
+        <div class="navigation-buttons">
+            <button><a href="{% url 'admin_dashboard' %}">Dashboard</a></button>
+            <button><a href="{% url 'admin_events' %}">Events</a></button>
+            <button><a href="{% url 'admin_evaluation' %}">Evaluation</a></button>
+        </div>
+     </div>
+     <h1>Welcome Back!</h1>
+     <div class="contents">
+        <div class="slider">
+            <div class="slides">
+                    <input type="radio" name="radio-btn" id="radio1">
+                    <input type="radio" name="radio-btn" id="radio2">
+                    <input type="radio" name="radio-btn" id="radio3">
+                    <input type="radio" name="radio-btn" id="radio4">
+                <div class="slide first">
+                    <div class="batch">
+                        <h2>2022-2026 Batch</h2>                     
+                    </div>
+                    <div class="details" id="details1">
+                        <p>
+                            Self-Introduction : 10<br><br>
+                            Mock-Interview : 10<br><br>
+                            Group Discussion : 10<br><br>
+                            Students Performance : 60%<br> 
+                        </p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="batch">
+                        <h2>2021-2025 Batch</h2>                     
+                    </div>
+                    <div class="details"  id="details2">
+                        <p>
+                            Self-Introduction : 20<br><br>
+                            Mock-Interview : 20<br><br>
+                            Group Discussion : 20<br><br>
+                            Students Performance : 70%<br> 
+                        </p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="batch">
+                        <h2>2020-2024 Batch</h2>                     
+                    </div>
+                    <div class="details"  id="details3">
+                        <p>
+                            Self-Introduction : 30<br><br>
+                            Mock-Interview : 30<br><br>
+                            Group Discussion : 30<br><br>
+                            Students Performance : 80%<br> 
+                        </p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="batch">
+                        <h2>2019-2023 Batch</h2>                     
+                    </div>
+                    <div class="details" id="details4">
+                        <p>
+                            Self-Introduction : 40<br><br>
+                            Mock-Interview : 40<br><br>
+                            Group Discussion : 40<br><br>
+                            Students Performance : 90%<br> 
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                <div class="navigation-auto">
+                    <div class="auto-btn1"></div>
+                    <div class="auto-btn2"></div>
+                    <div class="auto-btn3"></div>
+                    <div class="auto-btn4"></div>
+                </div>
+
+                <div class="navigation-manual">
+                    <label for="radio1" class="manual-btn"></label>
+                    <label for="radio2" class="manual-btn"></label>
+                    <label for="radio3" class="manual-btn"></label>
+                    <label for="radio4" class="manual-btn"></label>
+                </div>
+    </div>
+    <script>
+         var counter=1;
+         setInterval(function(){
+            document.getElementById('radio'+counter).checked=true;
+            counter++;
+            if(counter>4){
+                counter=1;
+            }
+        },5000);   
+    </script>
+</body>
+</html>

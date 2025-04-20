@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="{% static 'navigation.css' %}">
+    <style>
+        .navigation-bar {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            background-color: rgba(23, 45, 190, 0.65);
+            color: white;
+            width: 10%; 
+            height: 100vh; 
+            overflow-y: hidden;
+            text-align: center;
+        }
+        .navigation-bar img{
+            background-color:transparent; 
+            border-radius: 50%;       
+            height: 80px;
+            width: 80px;
+            object-fit: cover;
+            margin-top: 10px;
+        }
+        .navigation-buttons button{
+            background-color: transparent;
+            border: none;
+            height: 50px;
+            width: 100%;
+            color: white;
+            font-weight: bolder;
+            line-height: 05px;
+            font-size: 1.5vw;
+        }
+        .navigation-buttons button a {
+            text-decoration: none;
+            color: inherit; 
+          }
+          
+        .navigation-buttons button:hover{
+            color:black;
+            background: linear-gradient(to top,lightgrey,darkgrey);
+            font-size: 18px ;
+        }
+        body{
+            position: fixed;
+            height: 0%;
+            width: 100%;
+        }
+        header{
+            text-align: center;
+            padding: 30px;
+            width:100%;
+            margin-top: -10px;
+            background-color: antiquewhite;
+            font-size: 35px;
+            font-weight: bolder;
+        }
+        .events{
+            text-align: center;
+        }
+        .events img{
+            float: left;
+            height: 150px;
+            width: 250px;
+            background-color: white;
+            border-radius: 20px;
+        }
+        .events button{
+            width: 50%;
+            margin:5px;
+            padding: 0px;
+            border: 2px solid dodgerblue;
+            border-radius: 10px;
+            background-color: white;
+            color:black;
+            font-size: 16px;
+            cursor: pointer;
+            transition:background-color 0.5s,color 0.1s,box-shadow 0.5s;
+        }
+        .events button:hover {
+            background-color:rgb(102, 193, 249);
+            color:black;
+            box-shadow: 2px 2px 2px black;
+
+        }
+        .events button a{
+            text-decoration: none;
+            color: inherit;
+        }
+        .events h1{
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 30px;
+            width:100%;
+            height:100%;
+            margin-top:45px;
+        }
+
+    </style>
+</head>
+<body>
+    <header> Events</header>
+    <div class="navigation-bar">
+        <img src="{% static 'nav-bar image.png' %}">
+        <div class="navigation-buttons">
+            <button><a href="{% url 'admin_dashboard' %}">Dashboard</a></button>
+            <button><a href="{% url 'admin_events' %}">Events</a></button>
+            <button><a href="{% url 'admin_evaluation' %}">Evaluation</a></button>
+        </div>
+     </div>
+    <div class="events">
+        <button>
+            <a href="{% url 'admin_self' %}">
+            <img src="{% static 'self-introduction.png' %}" alt="self-interview">
+            <h1>Self-Introduction</h1>
+            </a>
+        </button>
+        <button>
+            <a href="{% url 'admin_group' %}">
+            <img src="{% static 'Group discussion.png' %}" alt="gd">
+            <h1>Group Discussion</h1>
+            </a>
+        </button>
+        <button>
+            <a href="{% url 'admin_mock' %}">
+            <img src="{% static 'Mock interview.png' %}" alt="mock">
+            <h1>Mock Interview</h1>
+            </a>
+        </button>
+    </div>
+
+
+    
+    <Footer></Footer>
+</body>
+</html>

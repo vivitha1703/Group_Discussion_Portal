@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slot Page</title>
+    <link rel="stylesheet" href="{% static 'navigation.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            scroll-behavior: smooth; /* Enables smooth scrolling */
+        }
+
+        .contents {
+            width: 80vw;
+            margin-left: 150px;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        h2 {
+            text-align: center;
+            color: #444;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .form-section {
+            width: 48%;
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .form-section h3 {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .form-section label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-section input[type="text"],
+        .form-section input[type="email"],
+        .form-section input[type="file"] {
+            width: 50%; /* Reduced width */
+            padding: 0.4rem; /* Reduced padding */
+            font-size: 0.9rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .form-section input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+
+        .form-section p {
+            margin: 1rem 0 0.5rem;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .form-section .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .submit {
+            width: 10%; /* Reduced width */
+            padding: 0.8rem; /* Reduced padding */
+            font-size: 18px; /* Slightly smaller text */
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .submit:hover {
+            background-color: #0056b3;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .contents {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .form-section {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            .submit {
+                width: 70%; /* Adjusted for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation-bar">
+        <img src="{% static 'nav-bar image.png' %}">
+        <div class="navigation-buttons">
+            <button><a href="{% url 'user_dashboard' %}">Dashboard</a></button>
+            <button><a href="{% url 'user_events' %}">Events</a></button>
+        </div>
+    </div>
+
+    <div class="contents">
+        <form action="/submit_form" method="POST">
+            <div class="form-section">
+                <h3>Student Details</h3>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+                <label for="roll_no">Roll No</label>
+                <input type="text" id="roll_no" name="roll_no" required>
+                <label for="email">Email Id</label>
+                <input type="email" id="email" name="email" required>
+                <label for="resume">Upload your Resume</label>
+                <input type="file" id="resume" name="resume" required>
+            </div>
+
+            <div class="form-section">
+                <h3>Slot Booking Details</h3>
+                <p>Date</p>
+                <div class="radio-group">
+                    <label><input type="radio" name="date" value="9.4.2020" required> 9.4.2020</label>
+                    <label><input type="radio" name="date" value="10.4.2020" required> 10.4.2020</label>
+                    <label><input type="radio" name="date" value="11.4.2020" required> 11.4.2020</label>
+                </div>
+
+                <p>Time</p>
+                <div class="radio-group">
+                    <label><input type="radio" name="time" value="9.10 - 9.20" required> 9.10 - 9.20</label>
+                    <label><input type="radio" name="time" value="9.20 - 9.30" required> 9.20 - 9.30</label>
+                    <label><input type="radio" name="time" value="9.30 - 9.40" required> 9.30 - 9.40</label>
+                </div>
+
+                <p>Venue</p>
+                <div class="radio-group">
+                    <label><input type="radio" name="venue" value="Faculty Hall 1" required> Faculty Hall 1</label>
+                    <label><input type="radio" name="venue" value="Faculty Hall 2" required> Faculty Hall 2</label>
+                    <label><input type="radio" name="venue" value="Faculty Hall 3" required> Faculty Hall 3</label>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div style="text-align: center; margin-top: 1rem;">
+        <button class="submit" type="submit">Submit</button>
+    </div>
+</body>
+</html>

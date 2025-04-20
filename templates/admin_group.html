@@ -1,0 +1,371 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Slot</title>
+    <link rel="stylesheet" href="{% static 'navigation.css' %}">
+    <style>
+        body {
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .contents {
+            margin-left: 15vw;
+            padding: 2vw;
+            display: flex;
+            justify-content: space-between;
+        }
+        #batchResult {
+            max-height: max-content;
+            width: 50%;
+            margin-left: 10vw;
+            border-radius: 0.5vw;
+            display: none;
+            border: 1px solid #ccc;
+            text-align: center;
+            margin-top: -0.7vw;
+            margin-bottom: 1vw;
+            background-color: #cccccc92;
+        }
+        #batchResult li {
+            background-color: #cccccc92;
+            margin: 0;
+            padding: 0.5vw;
+        }
+        #batchResult li:hover {
+            background-color: darkgray;
+        }
+        input {
+            margin-left: 2vw;
+            height: 2vw;
+            width: 13vw;
+            border-radius: 0.5vw;
+            text-align: center;
+            font-size: 1.3vw;
+            border-width: 0.2vw;
+        }
+        .left, .right {
+            width: 45%;
+            display: inline-block;
+            vertical-align: top;
+            padding: 2vw;
+        }
+
+        .left {
+            margin-right: 5vw;
+        }
+
+        .right {
+            margin-left: 40vw;
+            margin-top:-35vw;
+        }
+
+        .contents {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .title {
+            color: rgb(24, 4, 139);
+            font-size: 1.3vw;
+            font-weight: bold;
+            margin-bottom: 1vw;
+        }
+
+        .recommend {
+            font-family: 'Times New Roman', Times, serif;
+            margin-top: -5px;
+            margin-left: 2vw;
+            margin-bottom: 1.5vw;
+            font-size: 1.2vw;
+            font-style: italic;
+        }
+
+        .right .title {
+            margin-top: 1vw;
+        }
+
+        .right input {
+            width: 15vw;
+        }
+
+        .contents button {
+            margin-left: 40%;
+            background-color: skyblue;
+            border-radius: 0.5vw;
+            padding: 0.8vw;
+            font-weight: bold;
+            font-size: 1.5vw;
+            cursor: pointer;
+            width: 10%;
+        }
+
+        .left .title, .left input {
+            display: inline-block;
+            margin: 0.5vw 0;
+            vertical-align: middle;
+        }
+
+        .left .title {
+            width: 13vw; 
+        }
+
+        .left input {
+            width: 10vw;  
+        }
+
+        .right .faculty, .right .facultiesContainer {
+            display: flex;       
+            align-items: center;  
+            margin-bottom: -1vw;    
+        }
+        
+        .right .faculty input, .right .facultiesContainer input {
+            margin-left: 1vw;
+            margin-right: 1vw;    
+            width: 10vw;           
+        }
+        
+        #slotTiming {
+            width: 140px;
+            padding: 6px;
+            font-size: 16px;
+            border: 1px solid #959494; 
+            border-radius: 8px;
+            border-width: 0.2vw;
+            background-color: #ffffff; 
+            color: #080707; 
+            outline: none; 
+            cursor: pointer; 
+            position: relative;
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+        }
+        
+        #slotTiming:hover {
+            border-color: #0056b3; 
+        }
+        
+        #slotTiming:focus {
+            border-color: #0056b3; 
+            box-shadow: 0 0 5px rgba(0, 91, 179, 0.5); 
+        }
+        
+        #slotTiming option {
+            background-color: #fff; 
+            color: #333; 
+        }
+
+    </style>
+</head>
+<body>
+    <div class="navigation-bar">
+        <img src="{% static 'nav-bar image.png' %}">
+        <div class="navigation-buttons">
+            <button><a href="{% url 'admin_dashboard' %}">Dashboard</a></button>
+            <button><a href="{% url 'admin_events' %}">Events</a></button>
+            <button><a href="{% url 'admin_evaluation' %}">Evaluation</a></button>
+        </div>
+    </div>
+    <div class="contents">
+        <form action="#">
+            <div class="left">
+                <p class="title">Batch:</p>
+                <input type="text" id="batchInput" required>
+                <div id="batchResult"></div>
+                <p class="recommend" id="totalStudentsRecommend">Total Students: 0 students</p>
+                <p class="title">No. of Faculties:</p>
+                <input type="number" id="facultyCount" required><br>
+                <p class="recommend" id="studentsPerFaculties">Students per Faculty: 0</p>
+                <p class="title">Student per slot:</p>
+                <input type="number" id="studentsPerSlot" required><br>
+                <p class="recommend" id="studentsPerDayRecommend">Slot for students: 0</p>
+                <p class="title">Slot Timing:</p>
+                <select id="slotTiming" required>
+                    <option value="5">5 minutes</option>
+                    <option value="10">10 minutes</option>
+                    <option value="15">15 minutes</option>
+                    <option value="20">20 minutes</option>
+                    <option value="30">30 minutes</option>
+                </select><br>
+                <p class="recommend" id="slotsPerDay">Slots per day: 0</p>
+                <p class="title">Total days:</p>
+                <input type="number" id="totalDays" required>
+                <p class="recommend" id="coveredStudentsRecommend">Covered students: 0</p>
+                <p class="title">From date:</p>
+                <input type="date" id="startDate" required><br>
+                <p class="title">To date:</p>
+                <input type="date" id="endDate" required>
+            </div>
+            <div class="right">
+                <div class="faculty">
+                    <p class="title">Faculty 1</p><br>
+                    <input type="text" id="faculty1" required placeholder="Name...">
+                    <input type="text" id="venue1" required placeholder="Venue...">
+                </div><br><br>
+                <div id="facultiesContainer"></div>
+            </div>
+            <button><input type="submit" style="display:none">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        const batchInput = document.getElementById('batchInput');
+        const batchResult = document.getElementById('batchResult');
+        const totalStudentsRecommend = document.getElementById('totalStudentsRecommend');
+        const studentsPerFaculties = document.getElementById('studentsPerFaculties');
+        const facultyCountInput = document.getElementById('facultyCount');
+        const facultiesContainer = document.getElementById('facultiesContainer');
+        const studentsPerSlotInput = document.getElementById('studentsPerSlot');
+        const studentsPerDayRecommend = document.getElementById('studentsPerDayRecommend');
+        const slotTimingSelect = document.getElementById('slotTiming');
+        const slotsPerDayDisplay = document.getElementById('slotsPerDay');
+        const totalDaysInput = document.getElementById('totalDays');
+        const coveredStudentsRecommend = document.getElementById('coveredStudentsRecommend');
+    
+        const slotToStudents = {
+            5: 60,  // 5 minutes => 60 students/day
+            10: 30, // 10 minutes => 30 students/day
+            15: 20, // 15 minutes => 20 students/day
+            20: 15, // 20 minutes => 15 students/day
+            30: 10  // 30 minutes => 10 students/day
+        };
+    
+        batchInput.addEventListener('focus', function () {
+            const results = ['2026', '2027', '2028', '2029'];
+            batchResult.innerHTML = results.map(option => `<li class="batch-option">${option}</li>`).join('');
+            batchResult.style.display = 'block';
+        });
+    
+        batchResult.addEventListener('click', function (e) {
+            if (e.target.classList.contains('batch-option')) {
+                batchInput.value = e.target.textContent.trim();
+                batchResult.style.display = 'none';
+                fetchStudentCount(batchInput.value);
+            }
+        });
+    
+        batchInput.addEventListener('input', function () {
+            const batch = batchInput.value.trim();
+            if (batch) {
+                fetchStudentCount(batch);
+            }
+        });
+    
+        function fetchStudentCount(batch) {
+            if (batch) {
+                fetch(`/get-students-count/?batch=${batch}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const totalStudents = data.total_students || 0;
+                        totalStudentsRecommend.textContent = `Total Students: ${totalStudents} students`;
+                        updateStudentsPerFaculty(totalStudents);
+                        updateStudentsPerSlotFaculty(totalStudents);
+                    })
+                    .catch(() => {
+                        totalStudentsRecommend.textContent = 'Total Students: 0 students';
+                        updateStudentsPerFaculty(0);
+                        updateStudentsPerSlotFaculty(0);
+                    });
+            }
+        }
+    
+        facultyCountInput.addEventListener('input', function () {
+            const facultyCount = parseInt(facultyCountInput.value, 10) || 0;
+            facultiesContainer.innerHTML = '';
+            for (let i = 2; i <= facultyCount; i++) {
+                facultiesContainer.innerHTML += `
+                    <div class="faculty">
+                        <p class="title">Faculty ${i}</p><br>
+                        <input type="text" id="faculty${i}" required placeholder="Name...">
+                        <input type="text" id="venue${i}" required placeholder="Venue...">
+                    </div><br><br>
+                `;
+            }
+            const totalStudents = parseInt(totalStudentsRecommend.textContent.match(/\d+/)?.[0], 10) || 0;
+            updateStudentsPerFaculty(totalStudents);
+            updateStudentsPerSlotFaculty(totalStudents);
+            updateCoveredStudents();
+        });
+    
+        function updateStudentsPerFaculty(totalStudents) {
+            const facultyCount = parseInt(facultyCountInput.value, 10) || 0;
+            if (facultyCount > 0) {
+                const studentsPerFaculty = Math.ceil(totalStudents / facultyCount);
+                studentsPerFaculties.textContent = `Students per Faculty: ${studentsPerFaculty}`;
+            } else {
+                studentsPerFaculties.textContent = 'Students per Faculty: 0';
+            }
+        }
+    
+        function updateStudentsPerSlotFaculty(totalStudents) {
+            studentsPerSlotInput.addEventListener('input', function () {
+                const facultyCount = parseInt(facultyCountInput.value, 10) || 0;
+                const studentsPerSlot = parseInt(studentsPerSlotInput.value, 10) || 0;
+    
+                if (facultyCount > 0 && studentsPerSlot > 0) {
+                    const studentsPerFaculty = Math.ceil(totalStudents / facultyCount);
+                    const studentPerSlotFaculty = Math.ceil(studentsPerFaculty / studentsPerSlot);
+                    studentsPerDayRecommend.textContent = `Slot of students: ${studentPerSlotFaculty}`;
+                } else {
+                    studentsPerDayRecommend.textContent = 'Students per Faculty: 0';
+                }
+            });
+        }
+    
+        function updateSlotsPerDay() {
+            const selectedSlot = parseInt(slotTimingSelect.value, 10); 
+            if (!isNaN(selectedSlot) && slotToStudents[selectedSlot] !== undefined) {
+                const slotsPerDay = slotToStudents[selectedSlot];
+                slotsPerDayDisplay.textContent = `Slots per day: ${slotsPerDay}`;
+            } else {
+                slotsPerDayDisplay.textContent = 'Slots per day: 0';
+            }
+        }
+    
+        function updateCoveredStudents() {
+            const totalDays = parseInt(totalDaysInput.value, 10) || 0;
+            const slotTiming = parseInt(slotTimingSelect.value, 10) || 0; 
+            const studentsPerSlot = parseInt(studentsPerSlotInput.value, 10) || 0; 
+            const facultyCount = parseInt(facultyCountInput.value, 10) || 0;
+    
+            if (totalDays > 0 && slotToStudents[slotTiming] && studentsPerSlot > 0 && facultyCount > 0) {
+                const slotsPerDay = slotToStudents[slotTiming];
+                const coveredStudents = totalDays * slotsPerDay * studentsPerSlot * facultyCount;
+                coveredStudentsRecommend.textContent = `Covered students: ${coveredStudents}`;
+            } else {
+                coveredStudentsRecommend.textContent = 'Covered students: 0';
+            }
+        }
+    
+        totalDaysInput.addEventListener('input', updateCoveredStudents);
+        slotTimingSelect.addEventListener('change', updateCoveredStudents);
+        studentsPerSlotInput.addEventListener('input', updateCoveredStudents);
+        facultyCountInput.addEventListener('input', updateCoveredStudents);
+        slotTimingSelect.addEventListener('change', updateSlotsPerDay);
+    
+        window.addEventListener('DOMContentLoaded', () => {
+            updateSlotsPerDay();
+            updateCoveredStudents();
+        });
+        /*  Formulas used in the code:
+            1. Total Students:
+            totalStudents = data.total_students || 0;
+            2. Students per Faculty:
+            studentsPerFaculty = Math.ceil(totalStudents / facultyCount);
+            3. Students per Slot Faculty:
+            studentsPerSlotFaculty = Math.ceil(studentsPerFaculty / studentsPerSlot);
+            4. Slots per Day:
+            covered students = total days * studentPerSlot * facultyCount
+        */
+    </script>  
+    
+</body>
+</html>
+
+

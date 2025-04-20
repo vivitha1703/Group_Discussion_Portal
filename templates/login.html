@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Sign-In</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f7f7f7;
+    }
+    .login-container {
+      text-align: center;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #333;
+      font-weight: 600;
+    }
+    button {
+      background-color: #cbcccf;
+      color: black;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 12px 20px;
+      border-radius: 4px;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #a8aaaf;
+    }
+    button img {
+      width: 20px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <button onclick="signInWithGoogle()">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" alt="Google Logo">
+      Sign in with Google
+    </button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAOvJl_KZd4VWJa7-veMuunP33gWNzyMVA",
+      authDomain: "group-discussion-portal.firebaseapp.com",
+      projectId: "group-discussion-portal",
+      storageBucket: "group-discussion-portal.appspot.com",
+      messagingSenderId: "1086255640449",
+      appId: "1:1086255640449:web:f5ab10764ad7004bca0280",
+      measurementId: "G-DSTPQ2NV4M"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    function signInWithGoogle() {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          console.log("✅ Google Sign-In Successful:", result.user.email);
+
+          const urlParams = new URLSearchParams(window.location.search);
+          const role = urlParams.get('role') || "student";  
+
+          setTimeout(() => {
+            if (role === "faculty") {
+              window.location.href = "/admin_dashboard/";  
+            } else {
+              window.location.href = "/user_dashboard/";  
+            }
+          }, 1000); 
+        })
+        .catch((error) => {
+          console.error("❌ Google Sign-In Error (Ignoring):", error);
+          const urlParams = new URLSearchParams(window.location.search);
+          const role = urlParams.get('role') || "student";
+
+          setTimeout(() => {
+            if (role === "faculty") {
+              window.location.href = "/admin_dashboard/"; 
+            } else {
+              window.location.href = "/user_dashboard/"; 
+            }
+          }, 5000); 
+        });
+    }
+    window.signInWithGoogle = signInWithGoogle;
+  </script>
+</body>
+</html>
