@@ -5,6 +5,8 @@ class Student(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)  # Name field (varchar(100))
     roll_no = models.CharField(max_length=20, unique=True, null=True, blank=True)  # Roll Number (varchar(20)), unique
     email_id = models.EmailField(max_length=100, unique=True, null=True, blank=True)  # Email field (varchar(100)), unique
+    username = models.CharField(max_length=100, unique=True,null=True,blank=True)
+    password = models.CharField(max_length=100, unique=True,null=True,blank=True)
 
     def __str__(self):
         return f"{self.name} - {self.batch}"
@@ -29,6 +31,7 @@ class Faculty(models.Model):
     self_intro = models.ForeignKey(SelfIntro, on_delete=models.CASCADE, related_name="faculties")
     faculty_name = models.CharField(max_length=255)
     venue = models.CharField(max_length=255)
+    
 
     class Meta:
         db_table = "selfIntro_faculty"  

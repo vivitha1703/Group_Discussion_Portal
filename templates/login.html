@@ -1,115 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Google Sign-In</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
-      background-color: #f7f7f7;
     }
     .login-container {
-      text-align: center;
       background-color: #fff;
       padding: 30px;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 400px;
+      text-align: center;
     }
     h2 {
-      font-size: 24px;
       margin-bottom: 20px;
       color: #333;
-      font-weight: 600;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    select {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
     }
     button {
-      background-color: #cbcccf;
-      color: black;
-      font-size: 16px;
-      font-weight: bold;
-      padding: 12px 20px;
-      border-radius: 4px;
+      background-color: #4CAF50;
+      color: white;
       border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
+      padding: 12px;
       width: 100%;
-      transition: background-color 0.3s ease;
+      margin-top: 15px;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
     }
     button:hover {
-      background-color: #a8aaaf;
+      background-color: #45a049;
     }
-    button img {
-      width: 20px;
-      margin-right: 10px;
+    .error {
+      color: red;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <div class="login-container">
     <h2>Login</h2>
-    <button onclick="signInWithGoogle()">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" alt="Google Logo">
-      Sign in with Google
-    </button>
+    <form method="POST">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <select name="role" required>
+        <option value="">Select Role</option>
+        <option value="faculty" {% if role == "faculty" %}selected{% endif %}>Faculty</option>
+        <option value="student" {% if role == "student" %}selected{% endif %}>Student</option>
+      </select>
+      <button type="submit">Login</button>
+      {% if error %}
+        <div class="error">{{ error }}</div>
+      {% endif %}
+    </form>
   </div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "<Replace with your key>",
-      authDomain: "group-discussion-portal.firebaseapp.com",
-      projectId: "group-discussion-portal",
-      storageBucket: "group-discussion-portal.appspot.com",
-      messagingSenderId: "1086255640449",
-      appId: "1:1086255640449:web:f5ab10764ad7004bca0280",
-      measurementId: "G-DSTPQ2NV4M"
-    };
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
-
-    function signInWithGoogle() {
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          console.log("✅ Google Sign-In Successful:", result.user.email);
-
-          const urlParams = new URLSearchParams(window.location.search);
-          const role = urlParams.get('role') || "student";  
-
-          setTimeout(() => {
-            if (role === "faculty") {
-              window.location.href = "/admin_dashboard/";  
-            } else {
-              window.location.href = "/user_dashboard/";  
-            }
-          }, 1000); 
-        })
-        .catch((error) => {
-          console.error("❌ Google Sign-In Error (Ignoring):", error);
-          const urlParams = new URLSearchParams(window.location.search);
-          const role = urlParams.get('role') || "student";
-
-          setTimeout(() => {
-            if (role === "faculty") {
-              window.location.href = "/admin_dashboard/"; 
-            } else {
-              window.location.href = "/user_dashboard/"; 
-            }
-          }, 5000); 
-        });
-    }
-    window.signInWithGoogle = signInWithGoogle;
-  </script>
 </body>
 </html>
